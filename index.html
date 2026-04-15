@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Caesar Cipher</title>
+    <title>Key Caesar Cipher</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Caesar Cipher</h1>
+<h1>🔐 Key-Based Caesar Cipher</h1>
 
+<h3>Encryption</h3>
 <input id="shift" type="number" placeholder="Shift amount">
 <br>
-
 <textarea id="text" placeholder="Enter text"></textarea>
 <br>
 
@@ -20,8 +20,18 @@
 <h3>Encrypted:</h3>
 <p id="encrypted"></p>
 
-<h3>Decrypted:</h3>
-<p id="decrypted"></p>
+<h3>Generated Key (Equation):</h3>
+<p id="key"></p>
+
+<hr>
+
+<h3>Reverse from Key</h3>
+<input id="keyInput" placeholder="Paste key equation here">
+<br>
+<button onclick="decodeKey()">Get Shift</button>
+
+<h3>Recovered Shift:</h3>
+<p id="recoveredShift"></p>
 
 <script src="script.js"></script>
 </body>
