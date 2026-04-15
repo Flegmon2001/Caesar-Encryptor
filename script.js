@@ -21,8 +21,29 @@ function encrypt() {
     let text = document.getElementById("text").value;
 
     let encrypted = transform(text, shift);
-    let decrypted = transform(encrypted, -shift);
+
+    // 🔐 generate key equation
+    // key = shift * 3 + 5
+    let key = `(${shift} * 3 + 5)`;
 
     document.getElementById("encrypted").innerText = encrypted;
-    document.getElementById("decrypted").innerText = decrypted;
+    document.getElementById("key").innerText = key;
+}
+
+function decodeKey() {
+    let keyExpr = document.getElementById("keyInput").value;
+
+    try {
+        // evaluate key safely (simple case)
+        let keyValue = Function("return " + keyExpr)();
+
+        // reverse equation: shift = (key - 5) / 3
+        let shift = (keyValue - 5) / 3;
+
+        document.getElementById("recoveredShift").innerText = shift;
+        document.getElementById("shift").value = shift;
+
+    } catch (e) {
+        document.getElementById("recoveredShift").innerText = "Invalid key";
+    }
 }
