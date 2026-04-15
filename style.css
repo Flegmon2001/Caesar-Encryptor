@@ -1,16 +1,114 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial;
+    font-family: 'Segoe UI', sans-serif;
+    height: 100vh;
+    background: radial-gradient(circle at top, #1a0033, #000);
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+/* NAVBAR */
+.navbar {
+    position: fixed;   /* 🔥 wichtig */
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    padding: 15px 20px;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(10px);
+
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    z-index: 1000;     /* 🔥 verhindert Überdecken */
+}
+
+.nav-left {
+    font-weight: bold;
+    color: #9db4ff;
+}
+
+/* CENTER */
+.main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding-top: 70px; /* 🔥 Platz für Navbar */
+}
+
+/* CARD */
+.card {
+    width: 90%;
+    max-width: 600px;
+    padding: 25px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 0 25px rgba(100,100,255,0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* TITLE */
+h2 {
     text-align: center;
-    margin-top: 50px;
+    color: #c7bfff;
 }
 
-input, textarea {
-    width: 300px;
+/* INFO BOX */
+#infoBox {
+    font-size: 13px;
+    text-align: center;
+    opacity: 0.8;
+    background: rgba(255,255,255,0.05);
+    padding: 6px;
+    border-radius: 8px;
+}
+
+/* TEXTAREAS */
+textarea {
+    width: 100%;
+    height: 110px;
     padding: 10px;
-    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    resize: none;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    font-size: 14px;
 }
 
+/* BUTTON ROW */
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* BUTTONS */
 button {
-    padding: 10px 20px;
+    flex: 1;
+    padding: 10px;
+    border-radius: 25px;
+    border: none;
     cursor: pointer;
+    background: linear-gradient(45deg, #6a5cff, #00cfff);
+    color: white;
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+.switch {
+    flex: 0.4;
+    background: linear-gradient(45deg, #ff7b7b, #ffb347);
 }
