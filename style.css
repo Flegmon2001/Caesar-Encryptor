@@ -1,114 +1,49 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+function shiftChar(c, shift) {
+    if (c >= 'a' && c <= 'z') {
+        return String.fromCharCode((c.charCodeAt(0) - 97 + shift + 26) % 26 + 97);
+    }
+    if (c >= 'A' && c <= 'Z') {
+        return String.fromCharCode((c.charCodeAt(0) - 65 + shift + 26) % 26 + 65);
+    }
+    return c;
 }
 
-body {
-    font-family: 'Segoe UI', sans-serif;
-    height: 100vh;
-    background: radial-gradient(circle at top, #1a0033, #000);
-    color: white;
-    display: flex;
-    flex-direction: column;
+function transform(text, shift) {
+    let result = "";
+    for (let c of text) {
+        result += shiftChar(c, shift);
+    }
+    return result;
 }
 
-/* NAVBAR */
-.navbar {
-    position: fixed;   /* 🔥 wichtig */
-    top: 0;
-    left: 0;
-    width: 100%;
+function encrypt() {
+    let shift = parseInt(document.getElementById("shift").value);
+    let text = document.getElementById("text").value;
 
-    padding: 15px 20px;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(10px);
+    let encrypted = transform(text, shift);
 
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    z-index: 1000;     /* 🔥 verhindert Überdecken */
+    // 🔐 generate key equation
+    // key = shift * 3 + 5
+    let key = `(${shift} * 3 + 5)`;
+
+    document.getElementById("encrypted").innerText = encrypted;
+    document.getElementById("key").innerText = key;
 }
 
-.nav-left {
-    font-weight: bold;
-    color: #9db4ff;
-}
+function decodeKey() {
+    let keyExpr = document.getElementById("keyInput").value;
 
-/* CENTER */
-.main {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    try {
+        // evaluate key safely (simple case)
+        let keyValue = Function("return " + keyExpr)();
 
-    padding-top: 70px; /* 🔥 Platz für Navbar */
-}
+        // reverse equation: shift = (key - 5) / 3
+        let shift = (keyValue - 5) / 3;
 
-/* CARD */
-.card {
-    width: 90%;
-    max-width: 600px;
-    padding: 25px;
-    border-radius: 18px;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(15px);
-    box-shadow: 0 0 25px rgba(100,100,255,0.3);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
+        document.getElementById("recoveredShift").innerText = shift;
+        document.getElementById("shift").value = shift;
 
-/* TITLE */
-h2 {
-    text-align: center;
-    color: #c7bfff;
-}
-
-/* INFO BOX */
-#infoBox {
-    font-size: 13px;
-    text-align: center;
-    opacity: 0.8;
-    background: rgba(255,255,255,0.05);
-    padding: 6px;
-    border-radius: 8px;
-}
-
-/* TEXTAREAS */
-textarea {
-    width: 100%;
-    height: 110px;
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-    resize: none;
-    background: rgba(0,0,0,0.6);
-    color: white;
-    font-size: 14px;
-}
-
-/* BUTTON ROW */
-.buttons {
-    display: flex;
-    gap: 10px;
-}
-
-/* BUTTONS */
-button {
-    flex: 1;
-    padding: 10px;
-    border-radius: 25px;
-    border: none;
-    cursor: pointer;
-    background: linear-gradient(45deg, #6a5cff, #00cfff);
-    color: white;
-    transition: 0.2s;
-}
-
-button:hover {
-    transform: scale(1.05);
-}
-
-.switch {
-    flex: 0.4;
-    background: linear-gradient(45deg, #ff7b7b, #ffb347);
+    } catch (e) {
+        document.getElementById("recoveredShift").innerText = "Invalid key";
+    }
 }
